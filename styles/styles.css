@@ -1,0 +1,10 @@
+body {
+    margin: 0 auto;
+    position: relative;
+    height: 700px;
+    width: 1000px;
+}
+
+h1 {
+    text-align: center;
+}
