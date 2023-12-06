@@ -5,11 +5,10 @@ header {
 
     h1 {
         position: absolute;
+        top: 2rem;
+        left: 50%;
+        transform: translate(-50%, -50%);
         color: $text-color-light;
         font-size: 3rem;
-        top: 3rem;
-        left: 50%;
-        transform: translate(-50, -50%);
-        margin: auto;
     }
 }

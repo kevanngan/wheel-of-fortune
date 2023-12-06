@@ -1,2 +1,33 @@
 @use 'mixins' as *;
 @use 'variables' as *;
+
+main {
+// Buttons
+    .guess-letter-btn,
+    .guess-word-btn,
+    .spin-btn {
+        height: 50px;
+        width: 175px;
+        font-weight: 500;
+    }
+
+    .guess-letter-btn {
+        position: absolute;
+        bottom: 2rem;
+        right: 3rem;
+    }
+
+    .guess-word-btn {
+        position: absolute;
+        bottom: 7rem;
+        right: 3rem;
+    }
+    
+    .spin-btn {
+        position: absolute;
+        bottom: 2rem;
+        left: 3rem;
+    }
+
+
+}
