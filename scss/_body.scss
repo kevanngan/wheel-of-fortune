@@ -1,3 +1,14 @@
 @use 'mixins' as *;
 @use 'variables' as *;
 
+body {
+    font-family: $body-font;
+    @include flex-default;
+    margin: auto;
+    position: relative;
+    height: 700px;
+    width: 1000px;
+    background-image: url(/images/stage-background-1000px.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
