@@ -1,0 +1,11 @@
+// Mixins
+
+@use 'variables' as *;
+
+// Flex defaults
+
+@mixin flex-default {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
