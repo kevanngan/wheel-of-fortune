@@ -25,5 +25,30 @@ main {
         padding: .5rem 1rem;
         font-size: 1rem;
     }
+
+    #guess-letter-btn,
+    #guess-word-btn {
+        width: 200px;
+        height: 50px;
+    }
+
+
+    #guess-letter-btn {
+        position: absolute;
+        right: 2rem;
+        bottom: 2rem;
+    }
+
+    #guess-word-btn {
+        position: absolute;
+        right: 2rem;
+        bottom: 7rem;
+    }
+
+    #spin-btn {
+        position: absolute;
+        left: 2rem;
+        bottom: 2rem;
+    }
 }
 
