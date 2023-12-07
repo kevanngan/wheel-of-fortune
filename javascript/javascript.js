@@ -75,3 +75,6 @@ document.getElementById("guess-word-btn").addEventListener("click", () => {
     updateCashAmount();
   }
 });
+
+// Start a new game
+startNewGame();
