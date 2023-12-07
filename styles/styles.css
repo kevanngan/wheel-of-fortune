@@ -45,27 +45,40 @@ header h1 {
   font-size: 3rem;
 }
 
-main .guess-letter-btn,
-main .guess-word-btn,
-main .spin-btn {
+main #game-board {
+  margin: 1rem;
+  font-size: 1.5rem;
+  border: 2px solid white;
+}
+main #player-panel {
+  margin: 1rem;
+}
+main #spin-btn,
+main #guess-letter-btn,
+main #guess-word-btn {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+}
+main #guess-letter-btn,
+main #guess-word-btn {
+  width: 200px;
   height: 50px;
-  width: 175px;
-  font-weight: 500;
 }
-main .guess-letter-btn {
+main .guess-word {
   position: absolute;
+  right: 2rem;
   bottom: 2rem;
-  right: 3rem;
 }
-main .guess-word-btn {
+main #letter-guess-btn {
   position: absolute;
+  right: 2rem;
   bottom: 7rem;
-  right: 3rem;
 }
-main .spin-btn {
+main #spin-btn {
   position: absolute;
+  left: 2rem;
   bottom: 2rem;
-  left: 3rem;
 }
 
 /*# sourceMappingURL=styles.css.map */
