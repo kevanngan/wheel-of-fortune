@@ -29,3 +29,40 @@ function displayGuessBoard() {
       guessBoard.textContent += " ";
     }
   }
+
+// Function to update the cash amount
+function updateCashAmount() {
+  const cashAmountElement = document.getElementById("cash-amount");
+  cashAmountElement.textContent = cashAmount;
+}
+
+// Event listener for spin button
+document.getElementById("spin-btn").addEventListener("click", () => {
+
+  const spinResult = Math.floor(Math.random() * 901) + 100;
+  cashAmount += spinResult;
+});
+
+// Event listener for guess letter button
+document.getElementById("guess-letter-btn").addEventListener("click", () => {
+   
+  const letterInput = document.getElementById("letter-input");
+  const guessedLetter = letterInput.value.toLowerCase();
+  
+  if (guessedLetter.length === 1 && currentWord.includes(guessedLetter)) {
+    for (let i = 0; i < currentWord.length; i++) {
+      if (currentWord[i] === guessedLetter) {
+  
+        const guessBoard = document.getElementById("guess-board");
+        const guessBoardContent = guessBoard.textContent.split(" ");
+        guessBoardContent[i] = guessedLetter;
+        guessBoard.textContent = guessBoardContent.join(" ");
+      }
+    }
+
+    cashAmount += 200; 
+    updateCashAmount();
+  }
+
+  letterInput.value = "";
+});
