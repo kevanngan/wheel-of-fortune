@@ -66,3 +66,12 @@ document.getElementById("guess-letter-btn").addEventListener("click", () => {
 
   letterInput.value = "";
 });
+
+// Event listener for guess word button
+document.getElementById("guess-word-btn").addEventListener("click", () => {
+  const guessedWord = prompt("Enter the word").toLowerCase();
+  if (guessedWord === currentWord) {
+    cashAmount += 500; 
+    updateCashAmount();
+  }
+});
