@@ -3,17 +3,16 @@
 // Word list
 const words = ["apple", "banana", "orange", "grape"];
 
-let currentWord;
+let currentWord = '';
 let cashAmount = 0;
 
 // Function to start a new game
 function startNewGame() {
-  // Reset variables
-  currentWord = words[Math.floor(Math.random() * words.length)];
-  cashAmount = 0;
+  // Choose random word
+  currentWord = wordList[Math.floor(Math.random() * wordList.length)];
 
-  displayGuessBoard();
-  updateCashAmount();
+  // Display the initial game board
+  displayGameBoard();
 }
 
 // Function to display the guess board
@@ -44,12 +43,12 @@ document.getElementById("spin-btn").addEventListener("click", () => {
 });
 
 // Event listener for guess letter button
-document.getElementById("guess-letter-btn").addEventListener("click", () => {
+document.getElementById("guess-word-btn").addEventListener("click", () => {
    
-  const letterInput = document.getElementById("letter-input");
-  const guessedLetter = letterInput.value.toLowerCase();
+  const wordInput = document.getElementById("word-input");
+  const guessedWord = wordInput.value.toLowerCase();
   
-  if (guessedLetter.length === 1 && currentWord.includes(guessedLetter)) {
+  if (guessedWord.length === 1 && currentWord.includes(guessedLetter)) {
     for (let i = 0; i < currentWord.length; i++) {
       if (currentWord[i] === guessedLetter) {
   
@@ -68,9 +67,9 @@ document.getElementById("guess-letter-btn").addEventListener("click", () => {
 });
 
 // Event listener for guess word button
-document.getElementById("guess-word-btn").addEventListener("click", () => {
-  const guessedWord = prompt("Enter the word").toLowerCase();
-  if (guessedWord === currentWord) {
+document.getElementById("guess-letter-btn").addEventListener("click", () => {
+  const guessedLetter = prompt("Enter the word").toLowerCase();
+  if (guessedLetter === currentWord) {
     cashAmount += 500; 
     updateCashAmount();
   }

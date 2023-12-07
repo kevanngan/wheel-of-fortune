@@ -19,18 +19,25 @@
     </header>
     
     <main>
-        <div id="game-container">
-            <div id="guess-board"></div>
-            <div id="player-panel">
-              <p>Cash: <span id="cash-amount">0</span></p>
-            </div>
-            <form id="guess-form">
-              <input type="text" id="letter-input" maxlength="1" />
-              <button type="button" id="guess-letter-btn">Guess Letter</button>
-            </form>
-            <button id="spin-btn">Spin</button>
-            <button id="guess-word-btn">Guess Word</button>
+
+        <div class="game-board" id="game-board">
+
+          <div class="guess-board" id="guess-board"></div>
+          <div class="player-panel" id="player-panel">
+            <p>Cash: $<span id="cash">0</span></p>
           </div>
+          <div>
+            <button class="spin-btn" id="spin-btn">Spin</button>
+          </div>
+          <div>
+            <button class="letter-guess-btn">Guess Letter</button>
+          </div>
+          <div>
+            <button class="word-guess-btn">Guess Word</button>
+            <input type="text" id="word-input" placeholder="Enter your word guess">
+          </div>
+
+        </div>
     </main>
 </body>
 </html>
