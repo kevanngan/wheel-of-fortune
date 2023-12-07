@@ -19,13 +19,18 @@
     </header>
     
     <main>
-        <section class="game-elements">
-            <div class="wheel" id="wheel"></div>
+        <div id="game-container">
             <div id="guess-board"></div>
-            <button class="guess-letter-btn" id="guess-letter-btn">Guess Letter</button>
-            <button class="guess-word-btn" id="guess-word-btn">Guess Word</button>
-            <button class="spin-btn" id="spin-btn">Spin</button>
-        </section>
+            <div id="player-panel">
+              <p>Cash: <span id="cash-amount">0</span></p>
+            </div>
+            <form id="guess-form">
+              <input type="text" id="letter-input" maxlength="1" />
+              <button type="button" id="guess-letter-btn">Guess Letter</button>
+            </form>
+            <button id="spin-btn">Spin</button>
+            <button id="guess-word-btn">Guess Word</button>
+          </div>
     </main>
 </body>
 </html>
