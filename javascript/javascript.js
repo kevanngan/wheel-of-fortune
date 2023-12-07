@@ -9,7 +9,6 @@ let guessedLetters = [];
 
 // Function to start a new game
 function startNewGame() {
-  // Choose a random word
   currentWord = wordList[Math.floor(Math.random() * wordList.length)];
   guessedLetters = [];
 
@@ -22,7 +21,6 @@ function displayGameBoard() {
   const gameBoard = document.getElementById('game-board');
   gameBoard.textContent = '';
 
-  // Display underscores for each letter in the word
   for (const letter of currentWord) {
     if (guessedLetters.includes(letter)) {
       gameBoard.textContent += letter + ' ';
@@ -36,25 +34,18 @@ function displayGameBoard() {
 function guessLetter() {
   const guessedLetter = prompt('Enter a letter:');
 
-  // Check if the guessed letter is valid (not empty and a single character)
   if (guessedLetter && guessedLetter.length === 1) {
-    // Convert guessed letter to uppercase for consistency
     const uppercaseGuessedLetter = guessedLetter.toUpperCase();
 
-    // Check if the letter has already been guessed
     if (guessedLetters.includes(uppercaseGuessedLetter)) {
       alert('You already guessed this letter. Try again.');
     } else {
-      // Add the guessed letter to the list
       guessedLetters.push(uppercaseGuessedLetter);
 
-      // Check if the guessed letter is in the word
       if (currentWord.includes(uppercaseGuessedLetter)) {
         alert('Correct guess!');
-        // Update game board
         displayGameBoard();
-        // Update player cash
-        updatePlayerCash(100); // Set a sample cash value for correct letter guess
+        updatePlayerCash(100); 
       } else {
         alert('Incorrect guess. Try again.');
       }
@@ -72,17 +63,14 @@ function guessWord() {
   // Check if the guessed word is correct
   if (guessedWord === currentWord) {
     alert('Congratulations! You won!');
-    // Update player cash
-    updatePlayerCash(500); // Set a sample cash value for correct word guess
-    // Update game board with the correct word
+
+    updatePlayerCash(500);
     displayGameBoard();
-    // Start a new game
     startNewGame();
   } else {
     alert('Sorry, incorrect guess. Try again.');
   }
 
-  // Clear the input field after checking the guess
   guessedWordInput.value = '';
 }
 
@@ -92,11 +80,10 @@ function updatePlayerCash(amount) {
   document.getElementById('cash').textContent = playerCash;
 }
 
-// Event listeners
+// Update player cash based on the result
 document.getElementById('spin-btn').addEventListener('click', () => {
-  // Implement wheel spinning logic here
-  // Update player cash based on the result
-  const spinResult = Math.floor(Math.random() * 500) + 100; // Sample cash value
+  
+  const spinResult = Math.floor(Math.random() * 500) + 100;
   updatePlayerCash(spinResult);
 });
 
