@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use strict"
 
 // Word list
@@ -29,3 +30,5 @@ function displayGuessBoard() {
       guessBoard.textContent += " ";
     }
   }
+=======
+>>>>>>> 9ff6cef4173a1b8be2ce4dbb84c20283145188d4
