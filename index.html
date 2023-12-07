@@ -20,24 +20,21 @@
     
     <main>
 
-        <div class="game-board" id="game-board">
+      <div class="game-board" id="game-board"></div>
+      <div class="player-panel" id="player-panel">
+        <p>Cash: $<span id="cash">0</span></p>
+      </div>
+      <div>
+        <button class="spin-btn" id="spin-btn">Spin</button>
+      </div>
+      <div>
+        <button class="letter-guess-btn" id="letter-guess-btn">Guess Letter</button>
+      </div>
+      <div class="guess-word">
+        <button class="word-guess-btn" id="word-guess-btn">Guess Word</button>
+        <input type="text" id="word-input" placeholder="Enter your word guess">
+      </div>
 
-          <div class="guess-board" id="guess-board"></div>
-          <div class="player-panel" id="player-panel">
-            <p>Cash: $<span id="cash">0</span></p>
-          </div>
-          <div>
-            <button class="spin-btn" id="spin-btn">Spin</button>
-          </div>
-          <div>
-            <button class="letter-guess-btn">Guess Letter</button>
-          </div>
-          <div>
-            <button class="word-guess-btn">Guess Word</button>
-            <input type="text" id="word-input" placeholder="Enter your word guess">
-          </div>
-
-        </div>
     </main>
 </body>
 </html>
