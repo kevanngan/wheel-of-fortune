@@ -2,30 +2,28 @@
 @use 'variables' as *;
 
 
-// Buttons
-.guess-letter-btn,
-.guess-word-btn,
-.spin-btn {
-    height: 50px;
-    width: 175px;
-    font-weight: 500;
-    font-size: 1.5rem;
-}
-
-.guess-letter-btn {
-    position: absolute;
-    bottom: 2rem;
-    right: 3rem;
-}
-
-.guess-word-btn {
-    position: absolute;
-    bottom: 7rem;
-    right: 3rem;
-}
+main {
     
-.spin-btn {
-    position: absolute;
-    bottom: 2rem;
-    left: 3rem;
+    #game-container {
+        text-align: center;
+        margin: 1rem
+    }
+
+    #guess-board {
+        margin: 1rem 0;
+        font-size: 1.5rem;
+    }
+
+    #player-panel {
+        margin: 1rem 0;
+    }
+
+    #spin-btn,
+    #guess-letter-btn,
+    #guess-word-btn {
+        margin: 1rem;
+        padding: .5rem 1rem;
+        font-size: 1rem;
+    }
 }
+
