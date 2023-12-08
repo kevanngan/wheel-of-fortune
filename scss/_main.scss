@@ -15,36 +15,38 @@ main {
     }
 
     #spin-btn,
-    #guess-letter-btn,
-    #guess-word-btn {
-        margin: 1rem;
+    #letter-guess-btn,
+    #word-guess-btn {
+        margin: 0 auto;
         padding: .5rem 1rem;
         font-size: $font-size;
     }
 
-    #guess-letter-btn,
-    #guess-word-btn {
+    #letter-guess-btn,
+    #word-guess-btn {
         width: 200px;
         height: 50px;
-    }
-
-
-    .guess-word {
-        position: absolute;
         right: 2rem;
-        bottom: 2rem;
     }
 
     #letter-guess-btn {
         position: absolute;
-        right: 2rem;
         bottom: 7rem;
+    }
+
+    #word-guess-btn {
+        position: absolute;
+        bottom: 2rem;
     }
 
     #spin-btn {
         position: absolute;
-        left: 2rem;
-        bottom: 2rem;
+        width: 100px;
+        height: 100px;
+        bottom: 0;
+        border-radius: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
 }
