@@ -46,9 +46,17 @@ header h1 {
 }
 
 main #game-board {
-  margin: 1rem;
+  color: #fdfdfd;
+  text-shadow: 1px 2px 2px black;
+  font-weight: 550;
   font-size: 1.5rem;
-  border: 2px solid white;
+  margin: auto;
+  position: absolute;
+  right: 2rem;
+  bottom: 12rem;
+  padding: 1rem 2rem;
+  background-color: green;
+  border-radius: 1rem;
 }
 main .player-panel {
   color: #fdfdfd;
