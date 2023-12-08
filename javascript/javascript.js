@@ -1,7 +1,7 @@
 "use strict"
 
 // Sample word list
-const wordList = ['JAVASCRIPT', 'HTML', 'CSS', 'REACT', 'NODEJS'];
+const wordList = ['Apple', 'Orange', 'Pineapple', 'Mango', 'Durian'];
 
 let currentWord = '';
 let playerCash = 0;
@@ -22,8 +22,9 @@ function displayGameBoard() {
   gameBoard.textContent = '';
 
   for (const letter of currentWord) {
-    if (guessedLetters.includes(letter)) {
-      gameBoard.textContent += letter + ' ';
+    const uppercaseLetter = letter.toUpperCase();
+    if (guessedLetters.includes(uppercaseLetter)) {
+      gameBoard.textContent += uppercaseLetter + ' ';
     } else {
       gameBoard.textContent += '_ ';
     }
@@ -42,10 +43,10 @@ function guessLetter() {
     } else {
       guessedLetters.push(uppercaseGuessedLetter);
 
-      if (currentWord.includes(uppercaseGuessedLetter)) {
+      if (currentWord.toUpperCase().includes(uppercaseGuessedLetter)) {
         alert('Correct guess!');
         displayGameBoard();
-        updatePlayerCash(100); 
+        updatePlayerCash(100);
       } else {
         alert('Incorrect guess. Try again.');
       }
@@ -57,21 +58,17 @@ function guessLetter() {
 
 // Function to handle word guess
 function guessWord() {
-  const guessedWordInput = document.getElementById('word-input');
-  const guessedWord = guessedWordInput.value.toUpperCase();
+  const guessedWord = prompt('Enter the word:').toUpperCase();
 
   // Check if the guessed word is correct
-  if (guessedWord === currentWord) {
+  if (guessedWord === currentWord.toUpperCase()) {
     alert('Congratulations! You won!');
-
     updatePlayerCash(500);
     displayGameBoard();
     startNewGame();
   } else {
     alert('Sorry, incorrect guess. Try again.');
   }
-
-  guessedWordInput.value = '';
 }
 
 // Function to update the player's cash
@@ -82,7 +79,7 @@ function updatePlayerCash(amount) {
 
 // Update player cash based on the result
 document.getElementById('spin-btn').addEventListener('click', () => {
-  
+
   const spinResult = Math.floor(Math.random() * 500) + 100;
   updatePlayerCash(spinResult);
 });
