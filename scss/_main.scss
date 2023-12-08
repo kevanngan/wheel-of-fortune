@@ -1,29 +1,41 @@
 @use 'mixins' as *;
 @use 'variables' as *;
 
-
 main {
-    
+
+// Game board
     #game-board {
         margin: 1rem;
         font-size: $font-size;
         border: 2px solid white;
     }
 
-    #player-panel {
-        margin: 1rem;
+// Player Panel 
+    .player-panel {
+        @include text-styles;
+        position: absolute;
+        bottom: 2rem;
+        left: 2rem;
+        background-color: $primary2-color;
+        border-radius: $border-radius;
+        width: 200px;
+        height: 75px;
     }
 
+// Buttons
     #spin-btn,
     #letter-guess-btn,
-    #word-guess-btn {
+    #word-guess-btn,
+    #player-panel {
         margin: 0 auto;
         padding: .5rem 1rem;
-        font-size: $font-size;
     }
 
     #letter-guess-btn,
     #word-guess-btn {
+        @include text-styles;
+        background-color: $primary1-color;
+        border-radius: $border-radius;
         width: 200px;
         height: 50px;
         right: 2rem;
@@ -40,7 +52,9 @@ main {
     }
 
     #spin-btn {
+        @include text-styles;
         position: absolute;
+        background-color: $primary3-color;
         width: 100px;
         height: 100px;
         bottom: 0;

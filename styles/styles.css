@@ -50,35 +50,62 @@ main #game-board {
   font-size: 1.5rem;
   border: 2px solid white;
 }
-main #player-panel {
-  margin: 1rem;
+main .player-panel {
+  color: #fdfdfd;
+  text-shadow: 1px 2px 2px black;
+  font-weight: 550;
+  font-size: 1.5rem;
+  margin: auto;
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  background-color: #ffff00;
+  border-radius: 1rem;
+  width: 200px;
+  height: 75px;
 }
 main #spin-btn,
-main #guess-letter-btn,
-main #guess-word-btn {
-  margin: 1rem;
+main #letter-guess-btn,
+main #word-guess-btn,
+main #player-panel {
+  margin: 0 auto;
   padding: 0.5rem 1rem;
-  font-size: 1.5rem;
 }
-main #guess-letter-btn,
-main #guess-word-btn {
+main #letter-guess-btn,
+main #word-guess-btn {
+  color: #fdfdfd;
+  text-shadow: 1px 2px 2px black;
+  font-weight: 550;
+  font-size: 1.5rem;
+  margin: auto;
+  background-color: #0000ff;
+  border-radius: 1rem;
   width: 200px;
   height: 50px;
-}
-main .guess-word {
-  position: absolute;
   right: 2rem;
-  bottom: 2rem;
 }
 main #letter-guess-btn {
   position: absolute;
-  right: 2rem;
   bottom: 7rem;
 }
-main #spin-btn {
+main #word-guess-btn {
   position: absolute;
-  left: 2rem;
   bottom: 2rem;
+}
+main #spin-btn {
+  color: #fdfdfd;
+  text-shadow: 1px 2px 2px black;
+  font-weight: 550;
+  font-size: 1.5rem;
+  margin: auto;
+  position: absolute;
+  background-color: #ff0000;
+  width: 100px;
+  height: 100px;
+  bottom: 0;
+  border-radius: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /*# sourceMappingURL=styles.css.map */
