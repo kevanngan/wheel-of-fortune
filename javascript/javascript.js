@@ -12,6 +12,8 @@ let lives = 3;
 
 // DOM Elements
 const gameBoardElement = document.getElementById('game-board');
+const cashElement = document.getElementById('cash');
+const livesElement = document.getElementById('lives');
 
 // Function to start a new game
 function startNewGame() {
@@ -97,12 +99,19 @@ function handleGuess(result) {
     }
   }
 
+  updateUI();
 }
 
 // Function to update the player's cash
 function updatePlayerCash(amount) {
   playerCash += amount;
-  document.getElementById('cash').textContent = playerCash;
+  cashElement.textContent = playerCash;
+}
+
+// Function to update the UI with cash and lives
+function updateUI() {
+  cashElement.innerText = playerCash;
+  livesElement.innerText = lives;
 }
 
 // Update player cash based on the result
