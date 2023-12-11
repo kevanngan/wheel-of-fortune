@@ -26,7 +26,7 @@ function resetGameState() {
   guessedLetters = [];
   incorrectGuesses = 0;
   lives = 3;
-  playerCash = 0; // Reset player cash
+  playerCash = 0;
 }
 
 // Function to display the game board
@@ -37,11 +37,16 @@ function displayGameBoard() {
     .join('');
 }
 
+// Function to check if the guessed letter is valid
+function isValidGuess(guessedLetter) {
+  return guessedLetter && guessedLetter.length === 1;
+}
+
 // Function to handle letter guess
 function guessLetter() {
   const guessedLetter = prompt('Enter a letter:');
 
-  if (guessedLetter && guessedLetter.length === 1) {
+  if (isValidGuess(guessedLetter)) {
     const uppercaseGuessedLetter = guessedLetter.toUpperCase();
 
     if (guessedLetters.includes(uppercaseGuessedLetter)) {
@@ -52,9 +57,10 @@ function guessLetter() {
       if (currentWord.toUpperCase().includes(uppercaseGuessedLetter)) {
         alert('Correct guess!');
         displayGameBoard();
-        updatePlayerCash(100);
+        handleGuess('correct');
       } else {
         alert('Incorrect guess. Try again.');
+        handleGuess('incorrect');
       }
     }
   } else {
@@ -66,15 +72,31 @@ function guessLetter() {
 function guessWord() {
   const guessedWord = prompt('Enter the word:').toUpperCase();
 
-  // Check if the guessed word is correct
   if (guessedWord === currentWord.toUpperCase()) {
     alert('Congratulations! You won!');
-    updatePlayerCash(500);
+    handleGuess('correct');
     displayGameBoard();
     startNewGame();
   } else {
     alert('Sorry, incorrect guess. Try again.');
+    handleGuess('incorrect');
   }
+}
+
+// Function to handle guesses (both letter and word)
+function handleGuess(result) {
+  if (result === 'correct') {
+    const spinResult = Math.floor(Math.random() * 500) + 100;
+    updatePlayerCash(spinResult);
+  } else {
+    incorrectGuesses++;
+    lives--;
+
+    if (incorrectGuesses >= maxIncorrectGuesses) {
+      endGame(false);
+    }
+  }
+
 }
 
 // Function to update the player's cash
