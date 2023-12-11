@@ -114,7 +114,23 @@ function updateUI() {
   livesElement.innerText = lives;
 }
 
-// Update player cash based on the result
+// Function to end the game
+function endGame(hasPlayerWon) {
+  if (hasPlayerWon) {
+    alert('Congratulations! You won!');
+  } else {
+    alert('Sorry, you lost. Try again!');
+  }
+
+  const playAgain = confirm('Do you want to play again?');
+  if (playAgain) {
+    resetGameState();
+    startNewGame();
+  } 
+
+}
+
+// Event listeners
 document.getElementById('spin-btn').addEventListener('click', () => {
 
   const spinResult = Math.floor(Math.random() * 500) + 100;
