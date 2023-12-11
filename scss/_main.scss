@@ -10,7 +10,7 @@ main {
         right: 2rem;
         bottom: 12rem;
         padding: 1rem 2rem;
-        background-color: green;
+        background-color: $game-board-color;
         border-radius: $border-radius;
     }
 
@@ -20,10 +20,14 @@ main {
         position: absolute;
         bottom: 2rem;
         left: 2rem;
-        background-color: $primary2-color;
+        background-color: $player-color;
         border-radius: $border-radius;
         width: 200px;
         height: 75px;
+
+        p {
+            margin: auto;
+        }
     }
 
 // Buttons
@@ -38,7 +42,7 @@ main {
     #letter-guess-btn,
     #word-guess-btn {
         @include text-styles;
-        background-color: $primary1-color;
+        background-color: $guess-color;
         border-radius: $border-radius;
         width: 200px;
         height: 50px;
@@ -58,7 +62,7 @@ main {
     #spin-btn {
         @include text-styles;
         position: absolute;
-        background-color: $primary3-color;
+        background-color: $spin-color;
         width: 100px;
         height: 100px;
         bottom: 0;
