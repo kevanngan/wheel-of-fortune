@@ -1,34 +1,40 @@
 "use strict"
 
-// Sample word list
+// Word list
 const wordList = ['Apple', 'Orange', 'Pineapple', 'Mango', 'Durian'];
 
 let currentWord = '';
 let playerCash = 0;
 let guessedLetters = [];
+let maxIncorrectGuesses = 3;
+let incorrectGuesses = 0;
+let lives = 3;
+
+// DOM Elements
+const gameBoardElement = document.getElementById('game-board');
 
 // Function to start a new game
 function startNewGame() {
+  resetGameState();
+  displayGameBoard();
+  updateUI();
+}
+
+// Function to reset the game state
+function resetGameState() {
   currentWord = wordList[Math.floor(Math.random() * wordList.length)];
   guessedLetters = [];
-
-  // Display the initial game board
-  displayGameBoard();
+  incorrectGuesses = 0;
+  lives = 3;
+  playerCash = 0; // Reset player cash
 }
 
 // Function to display the game board
 function displayGameBoard() {
-  const gameBoard = document.getElementById('game-board');
-  gameBoard.textContent = '';
-
-  for (const letter of currentWord) {
-    const uppercaseLetter = letter.toUpperCase();
-    if (guessedLetters.includes(uppercaseLetter)) {
-      gameBoard.textContent += uppercaseLetter + ' ';
-    } else {
-      gameBoard.textContent += '_ ';
-    }
-  }
+  gameBoardElement.textContent = currentWord
+    .split('')
+    .map(letter => (guessedLetters.includes(letter.toUpperCase()) ? `${letter} ` : '_ '))
+    .join('');
 }
 
 // Function to handle letter guess
