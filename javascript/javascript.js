@@ -9,7 +9,6 @@ let guessedLetters = [];
 let maxIncorrectGuesses = 3;
 let incorrectGuesses = 0;
 let lives = 3;
-let hasSpunWheel = false;
 
 // DOM Elements
 const gameBoardElement = document.getElementById('game-board');
@@ -18,11 +17,17 @@ const livesElement = document.getElementById('lives');
 
 // Event listeners
 document.getElementById('spin-btn').addEventListener('click', () => {
-  const spinResult = Math.floor(Math.random() * 500) + 100;
-  updatePlayerCash(spinResult);
-
-  // Unlock the guess buttons after spinning the wheel
-  hasSpunWheel = true;
+  const spinButton = document.getElementById('spin-btn');
+  if (!spinButton.disabled) {
+    spinButton.disabled = true;
+    document.getElementById('wheel').classList.add('spinning');
+    const spinResult = Math.floor(Math.random() * 500) + 100;
+    setTimeout(() => {
+      updatePlayerCash(spinResult);
+      document.getElementById('wheel').classList.remove('spinning');
+      enableGuessButtons(); // Enable guess buttons after spinning
+    }, 1500); // Adjust the time based on your animation duration
+  }
 });
 
 document.getElementById('letter-guess-btn').addEventListener('click', guessLetter);
@@ -33,7 +38,7 @@ function startNewGame() {
   resetGameState();
   displayGameBoard();
   updateUI();
-  hasSpunWheel = false;
+  disableGuessButtons();
 }
 
 // Function to reset the game state
@@ -60,73 +65,70 @@ function isValidGuess(guessedLetter) {
 
 // Function to handle letter guess
 function guessLetter() {
-  if (hasSpunWheel) {
-    const guessedLetter = prompt('Enter a letter:');
+  const guessedLetter = prompt('Enter a letter:');
 
-    if (isValidGuess(guessedLetter)) {
-      const uppercaseGuessedLetter = guessedLetter.toUpperCase();
+  if (isValidGuess(guessedLetter)) {
+    const uppercaseGuessedLetter = guessedLetter.toUpperCase();
 
-      if (guessedLetters.includes(uppercaseGuessedLetter)) {
-        alert('You already guessed this letter. Try again.');
-      } else {
-        guessedLetters.push(uppercaseGuessedLetter);
-
-        if (currentWord.toUpperCase().includes(uppercaseGuessedLetter)) {
-          alert('Correct guess!');
-          displayGameBoard();
-          handleGuess('correct');
-        } else {
-          alert('Incorrect guess. Try again.');
-          handleGuess('incorrect');
-        }
-      }
+    if (guessedLetters.includes(uppercaseGuessedLetter)) {
+      alert('You already guessed this letter. Try again.');
     } else {
-      alert('Invalid guess. Please enter a single letter.');
+      guessedLetters.push(uppercaseGuessedLetter);
+
+      if (currentWord.toUpperCase().includes(uppercaseGuessedLetter)) {
+        alert('Correct guess!');
+        displayGameBoard();
+        handleGuess('correct');
+      } else {
+        alert('Incorrect guess. Try again.');
+        handleGuess('incorrect');
+      }
     }
   } else {
-    alert("You need to spin the wheel first!");
+    alert('Invalid guess. Please enter a single letter.');
   }
+  disableGuessButtons();
 }
 
 // Function to handle word guess
 function guessWord() {
-  if (hasSpunWheel) {
-    const guessedWord = prompt('Enter the word:').toUpperCase();
+  const guessedWord = prompt('Enter the word:').toUpperCase();
 
-    if (guessedWord === currentWord.toUpperCase()) {
-      alert('Congratulations! You won!');
-      handleGuess('correct');
-      displayGameBoard();
-      startNewGame();
-    } else {
-      alert('Sorry, incorrect guess. Try again.');
-      handleGuess('incorrect');
-    }
+  if (guessedWord === currentWord.toUpperCase()) {
+    alert('Congratulations! You won!');
+    handleGuess('correct');
+    displayGameBoard();
+    startNewGame();
   } else {
-    alert("You need to spin the wheel first!");
+    alert('Sorry, incorrect guess. Try again.');
+    handleGuess('incorrect');
   }
+  
+  disableGuessButtons();
 }
 
 // Function to handle guesses (both letter and word)
 function handleGuess(result) {
-  if (hasSpunWheel) {
-    if (result === 'correct') {
-      const spinResult = Math.floor(Math.random() * 500) + 100;
-      updatePlayerCash(spinResult);
-    } else {
-      incorrectGuesses++;
-      lives--;
+  if (result === 'correct') {
+    const spinResult = Math.floor(Math.random() * 500) + 100;
+    setTimeout(() => {
+        updatePlayerCash(spinResult);
+        document.getElementById('wheel').classList.remove('spinning');
+        enableSpin(); 
+        disableGuessButtons(); 
+    }, 1500);
+} else {
+    incorrectGuesses++;
+    lives--;
 
-      if (incorrectGuesses >= maxIncorrectGuesses) {
-        endGame(false);
-      }
+    if (incorrectGuesses >= maxIncorrectGuesses) {
+      endGame(false);
     }
-
-    updateUI();
-    hasSpunWheel = false; // Lock guess buttons until the player spins the wheel again
-  } else {
-    alert("You need to spin the wheel first!");
+    disableGuessButtons(); 
+    enableSpin(); 
   }
+
+  updateUI();
 }
 
 // Function to update the player's cash
@@ -154,7 +156,24 @@ function endGame(hasPlayerWon) {
     resetGameState();
     startNewGame();
   } 
+}
 
+// Function to disable both guess and spin buttons
+function disableGuessButtons() {
+  document.getElementById('spin-btn').disabled = false;
+  document.getElementById('letter-guess-btn').disabled = true;
+  document.getElementById('word-guess-btn').disabled = true;
+}
+
+// Function to enable guess buttons and disable spin button
+function enableGuessButtons() {
+  document.getElementById('spin-btn').disabled = true;
+  document.getElementById('letter-guess-btn').disabled = false;
+  document.getElementById('word-guess-btn').disabled = false;
+}
+
+function enableSpin() {
+  document.getElementById('spin-btn').disabled = false;
 }
 
 // Start the initial game
