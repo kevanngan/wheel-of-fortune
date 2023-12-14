@@ -10,4 +10,7 @@ body {
     width: 1000px;
     padding: 0;
     background-color: $background-color;
+    background: linear-gradient(to bottom, $background-color2, $background-color, $background-color2),
+                linear-gradient(to top, $background-color2, $background-color, $background-color2);
+
 }
