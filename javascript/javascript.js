@@ -65,46 +65,45 @@ function isValidGuess(guessedLetter) {
 
 // Function to handle letter guess
 function guessLetter() {
-  const guessedLetter = prompt('Enter a letter:');
+  showModal('Enter a letter:', (guessedLetter) => {
+    if (isValidGuess(guessedLetter)) {
+      const uppercaseGuessedLetter = guessedLetter.toUpperCase();
 
-  if (isValidGuess(guessedLetter)) {
-    const uppercaseGuessedLetter = guessedLetter.toUpperCase();
-
-    if (guessedLetters.includes(uppercaseGuessedLetter)) {
-      alert('You already guessed this letter. Try again.');
-    } else {
-      guessedLetters.push(uppercaseGuessedLetter);
-
-      if (currentWord.toUpperCase().includes(uppercaseGuessedLetter)) {
-        alert('Correct guess!');
-        displayGameBoard();
-        handleGuess('correct');
+      if (guessedLetters.includes(uppercaseGuessedLetter)) {
+        alert('You already guessed this letter. Try again.');
       } else {
-        alert('Incorrect guess. Try again.');
-        handleGuess('incorrect');
+        guessedLetters.push(uppercaseGuessedLetter);
+
+        if (currentWord.toUpperCase().includes(uppercaseGuessedLetter)) {
+          alert('Correct guess!');
+          displayGameBoard();
+          handleGuess('correct');
+        } else {
+          alert('Incorrect guess. Try again.');
+          handleGuess('incorrect');
+        }
       }
+    } else {
+      alert('Invalid guess. Please enter a single letter.');
     }
-  } else {
-    alert('Invalid guess. Please enter a single letter.');
-  }
-  disableGuessButtons();
+    disableGuessButtons();
+  });
 }
 
 // Function to handle word guess
 function guessWord() {
-  const guessedWord = prompt('Enter the word:').toUpperCase();
-
-  if (guessedWord === currentWord.toUpperCase()) {
-    alert('Congratulations! You won!');
-    handleGuess('correct');
-    displayGameBoard();
-    startNewGame();
-  } else {
-    alert('Sorry, incorrect guess. Try again.');
-    handleGuess('incorrect');
-  }
-  
-  disableGuessButtons();
+  showModal('Enter the word:', (guessedWord) => {
+    if (guessedWord === currentWord.toUpperCase()) {
+      alert('Congratulations! You won!');
+      handleGuess('correct');
+      displayGameBoard();
+      startNewGame();
+    } else {
+      alert('Sorry, incorrect guess. Try again.');
+      handleGuess('incorrect');
+    }
+    disableGuessButtons();
+  });
 }
 
 // Function to handle guesses (both letter and word)
@@ -143,21 +142,6 @@ function updateUI() {
   livesElement.innerText = lives;
 }
 
-// Function to end the game
-function endGame(hasPlayerWon) {
-  if (hasPlayerWon) {
-    alert('Congratulations! You won!');
-  } else {
-    alert('Sorry, you lost. Try again!');
-  }
-
-  const playAgain = confirm('Do you want to play again?');
-  if (playAgain) {
-    resetGameState();
-    startNewGame();
-  } 
-}
-
 // Function to disable both guess and spin buttons
 function disableGuessButtons() {
   document.getElementById('spin-btn').disabled = false;
@@ -174,6 +158,77 @@ function enableGuessButtons() {
 
 function enableSpin() {
   document.getElementById('spin-btn').disabled = false;
+}
+
+// Function to show a custom modal for input
+function showModal(message, callback) {
+  const modalContainer = createModalContainer();
+  const modal = createModal(message, callback);
+
+  modalContainer.appendChild(modal);
+  document.body.appendChild(modalContainer);
+}
+
+// Function to create the modal container
+function createModalContainer() {
+  const modalContainer = document.createElement('div');
+  modalContainer.classList.add('modal-container');
+  return modalContainer;
+}
+
+// Function to create the modal
+function createModal(message, callback) {
+  const modal = document.createElement('div');
+  modal.classList.add('modal');
+
+  const messageElement = document.createElement('p');
+  messageElement.textContent = message;
+
+  const inputElement = document.createElement('input');
+  inputElement.type = 'text';
+
+  const confirmButton = createButton('Confirm', () => {
+    const inputValue = inputElement.value.trim();
+    callback(inputValue);
+    closeModal();
+  });
+
+  modal.appendChild(messageElement);
+  modal.appendChild(inputElement);
+  modal.appendChild(confirmButton);
+
+  return modal;
+}
+
+// Function to create a button
+function createButton(text, onClick) {
+  const button = document.createElement('button');
+  button.textContent = text;
+  button.addEventListener('click', onClick);
+  return button;
+}
+
+// Function to close the modal
+function closeModal() {
+  const modalContainer = document.querySelector('.modal-container');
+  if (modalContainer) {
+    document.body.removeChild(modalContainer);
+  }
+}
+
+// Function to end the game
+function endGame(hasPlayerWon) {
+  if (hasPlayerWon) {
+    alert('Congratulations! You won!');
+  } else {
+    alert('Sorry, you lost. Try again!');
+  }
+
+  const playAgain = confirm('Do you want to play again?');
+  if (playAgain) {
+    resetGameState();
+    startNewGame();
+  } 
 }
 
 // Start the initial game
