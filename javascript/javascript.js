@@ -265,7 +265,7 @@ class WheelOfFortune {
     // Enable guess buttons after a delay (adjust the time as needed)
     setTimeout(() => {
       this.enableGuessButtons();
-    }, 2000); // Adjust the time as needed
+    }, 5000); // Adjust the time as needed
   }
 
   disableSpin() {
@@ -279,4 +279,3 @@ class WheelOfFortune {
 
 // Start the game
 const newWheelOfFortune = new WheelOfFortune();
-
