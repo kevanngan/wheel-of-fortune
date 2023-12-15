@@ -9,11 +9,15 @@ class WheelOfFortune {
     this.maxIncorrectGuesses = 3;
     this.incorrectGuesses = 0;
     this.lives = 3;
-    this.cashAmounts = [100, 200, 300, 400, 500, 600, 700, 800];
     this.gameBoardElement = document.getElementById('game-board');
     this.cashElement = document.getElementById('cash');
     this.livesElement = document.getElementById('lives');
     this.lastSpinResult = this.spinWheel();
+    this.correctSound = new Audio('/audio/correct.mp3'); 
+    this.wrongSound = new Audio('/audio/wrong.mp3'); 
+    this.winSound = new Audio('/audio/win.mp3'); 
+    this.loseSound = new Audio('/audio/lose.mp3'); 
+
     
     document.getElementById('spinBtn').addEventListener('click', () => {
       this.spin();
@@ -125,20 +129,32 @@ class WheelOfFortune {
 
   handleGuess(result) {
     if (result === 'correct') {
-        this.updatePlayerCash(this.lastSpinResult);
+      this.updatePlayerCash(this.lastSpinResult);
+      this.playCorrectSound();
     } else {
-        this.incorrectGuesses++;
-        this.lives--;
+      this.incorrectGuesses++;
+      this.lives--;
 
-        if (this.incorrectGuesses >= this.maxIncorrectGuesses || this.lives === 0) {
-            this.endGame(false);
-        }
+      if (this.incorrectGuesses >= this.maxIncorrectGuesses || this.lives === 0) {
+        this.playWrongSound();
+        this.endGame(false);
+      } else {
         this.enableGuessButtons();
         this.disableSpin();
+        this.playWrongSound();
+      }
     }
 
     this.updateUI();
-}
+  }
+
+  playCorrectSound() {
+    this.correctSound.play();
+  }
+
+  playWrongSound() {
+    this.wrongSound.play();
+  }
 
   updatePlayerCash(spinResult) {
     const cashAmount = Number(spinResult);
@@ -233,11 +249,13 @@ class WheelOfFortune {
 
   endGame(hasPlayerWon) {
     if (hasPlayerWon) {
+      this.playWinSound();
       alert('Yay! You won!');
     } else {
+      this.playLoseSound();
       alert('Sorry, you ran out of lives. You lose!');
     }
-  
+
     const playAgain = confirm('Do you want to play again?');
     if (playAgain) {
       this.resetGameState();
@@ -248,8 +266,16 @@ class WheelOfFortune {
     }
   }
 
+  playWinSound() {
+    this.winSound.play();
+  }
+
+  playLoseSound() {
+    this.loseSound.play();
+  }
+
   spinWheel() {
-    return this.cashAmounts[Math.floor(Math.random() * this.cashAmounts.length)];
+    return 100; // Set the cash amount to $100
   }
 
   spin() {
