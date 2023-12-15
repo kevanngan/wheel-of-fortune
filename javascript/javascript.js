@@ -79,6 +79,14 @@ class WheelOfFortune {
             alert('Correct guess!');
             this.displayGameBoard();
             this.handleGuess('correct');
+  
+            // Check if all correct letters have been guessed
+            const correctLetters = this.currentWord.toUpperCase().split('').filter(letter => alphabetSet.has(letter));
+            const allCorrectLettersGuessed = correctLetters.every(letter => this.guessedLetters.includes(letter));
+            
+            if (allCorrectLettersGuessed) {
+              this.endGame(true);
+            }
           } else {
             alert('Incorrect guess. Try again.');
             this.handleGuess('incorrect');
@@ -102,11 +110,11 @@ class WheelOfFortune {
     }
   
     this.showModal('Enter the word:', (guessedWord) => {
-      if (guessedWord === this.currentWord.toUpperCase()) {
-        alert('Congratulations! You won!');
-        this.handleGuess('correct');
+      const sanitizedGuessedWord = guessedWord.trim().toUpperCase();
+  
+      if (sanitizedGuessedWord === this.currentWord.toUpperCase()) {
         this.displayGameBoard();
-        this.startNewGame();
+        this.endGame(true); // Correctly call endGame with true for winning
       } else {
         alert('Sorry, incorrect guess. Try again.');
         this.handleGuess('incorrect');
@@ -225,10 +233,9 @@ class WheelOfFortune {
 
   endGame(hasPlayerWon) {
     if (hasPlayerWon) {
-      alert('Congratulations! You won!');
+      alert('Yay! You won!');
     } else {
-      alert('Sorry, you lost. Try again!');
-      this.lives = 0;
+      alert('Sorry, you ran out of lives. You lose!');
     }
   
     const playAgain = confirm('Do you want to play again?');
@@ -236,6 +243,8 @@ class WheelOfFortune {
       this.resetGameState();
       this.startNewGame();
       this.enableSpin();
+    } else {
+      alert('Thank you for playing!');
     }
   }
 
@@ -270,16 +279,4 @@ class WheelOfFortune {
 
 // Start the game
 const newWheelOfFortune = new WheelOfFortune();
-
-document.querySelector('.spinBtn').addEventListener('click', () => {
-  newWheelOfFortune.spin();
-});
-
-document.querySelector('.letter-guess-btn').addEventListener('click', () => {
-  newWheelOfFortune.guessLetter();
-});
-
-document.querySelector('.word-guess-btn').addEventListener('click', () => {
-  newWheelOfFortune.guessWord();
-});
 
