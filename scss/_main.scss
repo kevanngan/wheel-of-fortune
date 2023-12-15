@@ -59,18 +59,6 @@ main {
         bottom: 2rem;
     }
 
-    #spin-btn {
-        @include text-styles;
-        position: absolute;
-        background-color: $spin-color;
-        width: 100px;
-        height: 100px;
-        bottom: 0;
-        border-radius: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-
 // Wheel
 
     .container {
@@ -145,16 +133,17 @@ main {
                     font-weight: 700;
                     color: #fff;
                     text-shadow: 3px 5px 2px rgba(0,0,0,0.15);
-
-                    &::after {
-                        content: '$';
-                        position: absolute;
-                        font-size: 1rem;
-                        font-weight: 500;
-                    }
                 }
             }
         }
     }
-}
 
+// Audio
+
+    // Volume Icon
+    #volume-icon {
+        font-size: 30px;
+        color: red;
+    }
+
+}
