@@ -1,236 +1,285 @@
-"use strict"
+"use strict";
 
-// Word list
-const wordList = ['Apple', 'Orange', 'Pineapple', 'Mango', 'Durian'];
+class WheelOfFortune {
+  constructor() {
+    this.wordList = ['Apple', 'Orange', 'Pineapple', 'Mango', 'Durian'];
+    this.currentWord = '';
+    this.playerCash = 0;
+    this.guessedLetters = [];
+    this.maxIncorrectGuesses = 3;
+    this.incorrectGuesses = 0;
+    this.lives = 3;
+    this.cashAmounts = [100, 200, 300, 400, 500, 600, 700, 800];
+    this.gameBoardElement = document.getElementById('game-board');
+    this.cashElement = document.getElementById('cash');
+    this.livesElement = document.getElementById('lives');
+    this.lastSpinResult = this.spinWheel();
+    
+    document.getElementById('spinBtn').addEventListener('click', () => {
+      this.spin();
+    });
 
-let currentWord = '';
-let playerCash = 0;
-let guessedLetters = [];
-let maxIncorrectGuesses = 3;
-let incorrectGuesses = 0;
-let lives = 3;
+    document.getElementById('letter-guess-btn').addEventListener('click', () => {
+      this.guessLetter();
+    });
 
-// DOM Elements
-const gameBoardElement = document.getElementById('game-board');
-const cashElement = document.getElementById('cash');
-const livesElement = document.getElementById('lives');
+    document.getElementById('word-guess-btn').addEventListener('click', () => {
+      this.guessWord();
+    });
 
-// Event listeners
-document.getElementById('spin-btn').addEventListener('click', () => {
-  const spinButton = document.getElementById('spin-btn');
-  if (!spinButton.disabled) {
-    spinButton.disabled = true;
-    document.getElementById('wheel').classList.add('spinning');
-    const spinResult = Math.floor(Math.random() * 500) + 100;
-    setTimeout(() => {
-      updatePlayerCash(spinResult);
-      document.getElementById('wheel').classList.remove('spinning');
-      enableGuessButtons(); // Enable guess buttons after spinning
-    }, 1500); // Adjust the time based on your animation duration
+    this.startNewGame();
   }
+
+  startNewGame() {
+    this.resetGameState();
+    this.displayGameBoard();
+    this.updateUI();
+    this.disableGuessButtons();
+  }
+
+  resetGameState() {
+    this.currentWord = this.wordList[Math.floor(Math.random() * this.wordList.length)];
+    this.guessedLetters = [];
+    this.incorrectGuesses = 0;
+    this.lives = 3;
+    this.playerCash = 0;
+  }
+
+  displayGameBoard() {
+    this.gameBoardElement.textContent = this.currentWord
+      .split('')
+      .map(letter => (this.guessedLetters.includes(letter.toUpperCase()) ? `${letter} ` : '_ '))
+      .join('');
+  }
+
+  isValidGuess(guessedLetter) {
+    return guessedLetter && guessedLetter.length === 1;
+  }
+
+  guessLetter() {
+    const alphabetSet = new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  
+    // Check if all letters in the alphabet have been guessed
+    if (this.guessedLetters.length === alphabetSet.size) {
+      alert('You have guessed all the letters of the alphabet. Try another word.');
+      this.disableGuessButtons();
+      return;
+    }
+  
+    this.showModal('Enter a letter:', (guessedLetter) => {
+      if (this.isValidGuess(guessedLetter)) {
+        const uppercaseGuessedLetter = guessedLetter.toUpperCase();
+  
+        if (this.guessedLetters.includes(uppercaseGuessedLetter)) {
+          alert('You already guessed this letter. Try again.');
+        } else {
+          this.guessedLetters.push(uppercaseGuessedLetter);
+  
+          if (this.currentWord.toUpperCase().includes(uppercaseGuessedLetter)) {
+            alert('Correct guess!');
+            this.displayGameBoard();
+            this.handleGuess('correct');
+          } else {
+            alert('Incorrect guess. Try again.');
+            this.handleGuess('incorrect');
+          }
+        }
+      } else {
+        alert('Invalid guess. Please enter a single letter.');
+      }
+      this.disableGuessButtons();
+    });
+  }
+
+  guessWord() {
+    const alphabetSet = new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  
+    // Check if all letters in the alphabet have been guessed
+    if (this.guessedLetters.length === alphabetSet.size) {
+      alert('You have guessed all the letters of the alphabet. Try another word.');
+      this.disableGuessButtons();
+      return;
+    }
+  
+    this.showModal('Enter the word:', (guessedWord) => {
+      if (guessedWord === this.currentWord.toUpperCase()) {
+        alert('Congratulations! You won!');
+        this.handleGuess('correct');
+        this.displayGameBoard();
+        this.startNewGame();
+      } else {
+        alert('Sorry, incorrect guess. Try again.');
+        this.handleGuess('incorrect');
+      }
+      this.disableGuessButtons();
+    });
+  }
+
+  handleGuess(result) {
+    if (result === 'correct') {
+        this.updatePlayerCash(this.lastSpinResult);
+    } else {
+        this.incorrectGuesses++;
+        this.lives--;
+
+        if (this.incorrectGuesses >= this.maxIncorrectGuesses || this.lives === 0) {
+            this.endGame(false);
+        }
+        this.enableGuessButtons();
+        this.disableSpin();
+    }
+
+    this.updateUI();
+}
+
+  updatePlayerCash(spinResult) {
+    const cashAmount = Number(spinResult);
+    if (!isNaN(cashAmount)) {
+      this.playerCash += cashAmount;
+      this.cashElement.textContent = this.playerCash;
+    } else {
+      console.error("Invalid cash amount:", spinResult);
+    }
+  }
+
+  updateUI() {
+    this.cashElement.innerText = this.playerCash;
+    this.livesElement.innerText = this.lives;
+  }
+
+  disableGuessButtons() {
+    document.getElementById('spinBtn').disabled = false;
+    document.getElementById('letter-guess-btn').disabled = true;
+    document.getElementById('word-guess-btn').disabled = true;
+  }
+
+  enableGuessButtons() {
+    document.getElementById('spinBtn').disabled = true;
+    document.getElementById('letter-guess-btn').disabled = false;
+    document.getElementById('word-guess-btn').disabled = false;
+  }
+
+  enableSpin() {
+    document.getElementById('spinBtn').disabled = false;
+  }
+
+  showModal(message, callback) {
+    // Close any existing modals
+    this.closeModal();
+  
+    const modalContainer = this.createModalContainer();
+    const modal = this.createModal(message, callback);
+  
+    modalContainer.appendChild(modal);
+    document.body.appendChild(modalContainer);
+  }
+
+  createModalContainer() {
+    const modalContainer = document.createElement('div');
+    modalContainer.classList.add('modal-container');
+    return modalContainer;
+  }
+
+  createModal(message, callback) {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+
+    const confirmButton = this.createButton('Confirm', () => {
+      const inputValue = inputElement.value.trim();
+      callback(inputValue);
+      this.closeModal();
+    });
+
+    modal.appendChild(messageElement);
+    modal.appendChild(inputElement);
+    modal.appendChild(confirmButton);
+
+    return modal;
+  }
+
+  createButton(text, onClick) {
+    const button = document.createElement('button');
+    button.textContent = text;
+    button.addEventListener('click', onClick);
+    return button;
+  }
+
+  closeModal() {
+    const modalContainer = document.querySelector('.modal-container');
+    if (modalContainer) {
+      document.body.removeChild(modalContainer);
+      
+      // Clear input value after closing the modal
+      const inputElement = modalContainer.querySelector('input');
+      if (inputElement) {
+        inputElement.value = '';
+      }
+    }
+  }
+
+  endGame(hasPlayerWon) {
+    if (hasPlayerWon) {
+      alert('Congratulations! You won!');
+    } else {
+      alert('Sorry, you lost. Try again!');
+      this.lives = 0;
+    }
+  
+    const playAgain = confirm('Do you want to play again?');
+    if (playAgain) {
+      this.resetGameState();
+      this.startNewGame();
+      this.enableSpin();
+    }
+  }
+
+  spinWheel() {
+    return this.cashAmounts[Math.floor(Math.random() * this.cashAmounts.length)];
+  }
+
+  spin() {
+    const wheel = document.querySelector('.wheel');
+    let value = Math.ceil(Math.random() * 3600);
+  
+    wheel.style.transform = "rotate(" + value + "deg)";
+    value = Math.ceil(Math.random() * 3600);
+  
+    // Disable spin button after spinning
+    this.disableSpin();
+  
+    // Enable guess buttons after a delay (adjust the time as needed)
+    setTimeout(() => {
+      this.enableGuessButtons();
+    }, 2000); // Adjust the time as needed
+  }
+
+  disableSpin() {
+    document.getElementById('spinBtn').disabled = true;
+  }
+  
+  enableSpin() {
+    document.getElementById('spinBtn').disabled = false;
+  }
+}
+
+// Start the game
+const newWheelOfFortune = new WheelOfFortune();
+
+document.querySelector('.spinBtn').addEventListener('click', () => {
+  newWheelOfFortune.spin();
 });
 
-document.getElementById('letter-guess-btn').addEventListener('click', guessLetter);
-document.getElementById('word-guess-btn').addEventListener('click', guessWord);
+document.querySelector('.letter-guess-btn').addEventListener('click', () => {
+  newWheelOfFortune.guessLetter();
+});
 
-// Function to start a new game
-function startNewGame() {
-  resetGameState();
-  displayGameBoard();
-  updateUI();
-  disableGuessButtons();
-}
-
-// Function to reset the game state
-function resetGameState() {
-  currentWord = wordList[Math.floor(Math.random() * wordList.length)];
-  guessedLetters = [];
-  incorrectGuesses = 0;
-  lives = 3;
-  playerCash = 0;
-}
-
-// Function to display the game board
-function displayGameBoard() {
-  gameBoardElement.textContent = currentWord
-    .split('')
-    .map(letter => (guessedLetters.includes(letter.toUpperCase()) ? `${letter} ` : '_ '))
-    .join('');
-}
-
-// Function to check if the guessed letter is valid
-function isValidGuess(guessedLetter) {
-  return guessedLetter && guessedLetter.length === 1;
-}
-
-// Function to handle letter guess
-function guessLetter() {
-  showModal('Enter a letter:', (guessedLetter) => {
-    if (isValidGuess(guessedLetter)) {
-      const uppercaseGuessedLetter = guessedLetter.toUpperCase();
-
-      if (guessedLetters.includes(uppercaseGuessedLetter)) {
-        alert('You already guessed this letter. Try again.');
-      } else {
-        guessedLetters.push(uppercaseGuessedLetter);
-
-        if (currentWord.toUpperCase().includes(uppercaseGuessedLetter)) {
-          alert('Correct guess!');
-          displayGameBoard();
-          handleGuess('correct');
-        } else {
-          alert('Incorrect guess. Try again.');
-          handleGuess('incorrect');
-        }
-      }
-    } else {
-      alert('Invalid guess. Please enter a single letter.');
-    }
-    disableGuessButtons();
-  });
-}
-
-// Function to handle word guess
-function guessWord() {
-  showModal('Enter the word:', (guessedWord) => {
-    if (guessedWord === currentWord.toUpperCase()) {
-      alert('Congratulations! You won!');
-      handleGuess('correct');
-      displayGameBoard();
-      startNewGame();
-    } else {
-      alert('Sorry, incorrect guess. Try again.');
-      handleGuess('incorrect');
-    }
-    disableGuessButtons();
-  });
-}
-
-// Function to handle guesses (both letter and word)
-function handleGuess(result) {
-  if (result === 'correct') {
-    const spinResult = Math.floor(Math.random() * 500) + 100;
-    setTimeout(() => {
-        updatePlayerCash(spinResult);
-        document.getElementById('wheel').classList.remove('spinning');
-        enableSpin(); 
-        disableGuessButtons(); 
-    }, 1500);
-} else {
-    incorrectGuesses++;
-    lives--;
-
-    if (incorrectGuesses >= maxIncorrectGuesses) {
-      endGame(false);
-    }
-    disableGuessButtons(); 
-    enableSpin(); 
-  }
-
-  updateUI();
-}
-
-// Function to update the player's cash
-function updatePlayerCash(amount) {
-  playerCash += amount;
-  cashElement.textContent = playerCash;
-}
-
-// Function to update the UI with cash and lives
-function updateUI() {
-  cashElement.innerText = playerCash;
-  livesElement.innerText = lives;
-}
-
-// Function to disable both guess and spin buttons
-function disableGuessButtons() {
-  document.getElementById('spin-btn').disabled = false;
-  document.getElementById('letter-guess-btn').disabled = true;
-  document.getElementById('word-guess-btn').disabled = true;
-}
-
-// Function to enable guess buttons and disable spin button
-function enableGuessButtons() {
-  document.getElementById('spin-btn').disabled = true;
-  document.getElementById('letter-guess-btn').disabled = false;
-  document.getElementById('word-guess-btn').disabled = false;
-}
-
-function enableSpin() {
-  document.getElementById('spin-btn').disabled = false;
-}
-
-// Function to show a custom modal for input
-function showModal(message, callback) {
-  const modalContainer = createModalContainer();
-  const modal = createModal(message, callback);
-
-  modalContainer.appendChild(modal);
-  document.body.appendChild(modalContainer);
-}
-
-// Function to create the modal container
-function createModalContainer() {
-  const modalContainer = document.createElement('div');
-  modalContainer.classList.add('modal-container');
-  return modalContainer;
-}
-
-// Function to create the modal
-function createModal(message, callback) {
-  const modal = document.createElement('div');
-  modal.classList.add('modal');
-
-  const messageElement = document.createElement('p');
-  messageElement.textContent = message;
-
-  const inputElement = document.createElement('input');
-  inputElement.type = 'text';
-
-  const confirmButton = createButton('Confirm', () => {
-    const inputValue = inputElement.value.trim();
-    callback(inputValue);
-    closeModal();
-  });
-
-  modal.appendChild(messageElement);
-  modal.appendChild(inputElement);
-  modal.appendChild(confirmButton);
-
-  return modal;
-}
-
-// Function to create a button
-function createButton(text, onClick) {
-  const button = document.createElement('button');
-  button.textContent = text;
-  button.addEventListener('click', onClick);
-  return button;
-}
-
-// Function to close the modal
-function closeModal() {
-  const modalContainer = document.querySelector('.modal-container');
-  if (modalContainer) {
-    document.body.removeChild(modalContainer);
-  }
-}
-
-// Function to end the game
-function endGame(hasPlayerWon) {
-  if (hasPlayerWon) {
-    alert('Congratulations! You won!');
-  } else {
-    alert('Sorry, you lost. Try again!');
-  }
-
-  const playAgain = confirm('Do you want to play again?');
-  if (playAgain) {
-    resetGameState();
-    startNewGame();
-  } 
-}
-
-// Start the initial game
-startNewGame();
+document.querySelector('.word-guess-btn').addEventListener('click', () => {
+  newWheelOfFortune.guessWord();
+});
 
