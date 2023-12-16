@@ -21,29 +21,40 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         border: 3px solid $game-input-color;
         z-index: 101;
+        text-align: center;
+        justify-content: center;
 
         p {
-            font-size: 20px;
+            font-size: 24px;
+            margin: 0 auto;
+            padding: 1rem;
+            padding-left: 0;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: .5rem;
             box-sizing: border-box;
             border: 2px solid $game-input-color;
+            background-color: $player-input-color;
+            color: $game-input-color;
+            font-size: 1rem;
+            font-size: 400;
         }
   
         button {
-            background-color: #4CAF50;
-            color: white;
+            background-color: $game-confirm-color;
+            color: $game-input-color;
             padding: 10px 15px;
-            border: none;
+            border: 2px solid $game-input-color;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
             
             &:hover {
-                background-color: #45a049;
+                background-color: $confirm-hover;
+                box-shadow: 0 0 10px $game-confirm-color;
             }
         }
     }
