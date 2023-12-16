@@ -39,6 +39,18 @@ class WheelOfFortune {
     this.displayGameBoard();
     this.updateUI();
     this.disableGuessButtons();
+
+    const startButton = document.getElementById('startBtn');
+
+    startButton.addEventListener('click', () => {
+      this.hideStartPanel();
+      this.enableSpin(); // Optionally, enable the spin button after hiding the start panel
+    });
+  }
+
+  hideStartPanel() {
+    const startPanel = document.querySelector('.start-panel');
+    startPanel.style.display = 'none';
   }
 
   resetGameState() {
