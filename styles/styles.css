@@ -116,6 +116,29 @@ main .start-panel {
   width: 45%;
   padding: 1rem;
   color: #2a2838;
+  position: absolute;
+  top: 225px;
+  left: 275px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+main .start-panel button {
+  background-color: #15b794;
+  border: 2px solid #2a2838;
+  border-radius: 10%;
+  color: #2a2838;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 auto;
+}
+main .start-panel button:hover {
+  background-color: rgb(37, 221, 181);
+  box-shadow: 0 0 10px #15b794;
+}
+main .start-panel h4 {
+  margin: 0;
 }
 main #game-board {
   color: #fdfdfd;

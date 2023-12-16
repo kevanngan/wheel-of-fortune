@@ -16,6 +16,33 @@ main {
         width: 45%;
         padding: 1rem;
         color: $game-input-color;
+        position: absolute;
+        top: 225px;
+        left: 275px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        button {
+            background-color: $game-confirm-color;
+            border: 2px solid $game-input-color;
+            border-radius: 10%;
+            color: $game-input-color;
+            padding: 10px 15px;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0 auto;
+
+
+            &:hover {
+                background-color: $confirm-hover;
+                box-shadow: 0 0 10px $game-confirm-color;
+            }
+        }
+
+        h4 {
+            margin: 0;
+        }
     }
 
 // Game board
