@@ -75,7 +75,7 @@ class WheelOfFortune {
         const uppercaseGuessedLetter = guessedLetter.toUpperCase();
   
         if (this.guessedLetters.includes(uppercaseGuessedLetter)) {
-          alert('You already guessed this letter. Try again.');
+          alert('You already guessed this letter.');
         } else {
           this.guessedLetters.push(uppercaseGuessedLetter);
   
