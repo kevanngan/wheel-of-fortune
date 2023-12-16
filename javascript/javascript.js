@@ -3,7 +3,7 @@
 class WheelOfFortune {
   constructor() {
 // Game state variables
-    this.wordList = ['Apple', 'Orange', 'Pineapple', 'Mango', 'Durian'];
+    this.wordList = ['Apple', 'Orange', 'Pineapple', 'Mango', 'Durian', 'Banana', 'Grape', 'Watermelon', 'Strawberry', 'Kiwi', 'Blueberry', 'Peach', 'Plum', 'Papaya', 'Avocado', 'Raspberry'];
     this.currentWord = '';
     this.playerCash = 0;
     this.guessedLetters = [];
