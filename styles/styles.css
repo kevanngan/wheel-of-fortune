@@ -32,7 +32,7 @@
   padding: 0.5rem;
   box-sizing: border-box;
   border: 2px solid #2a2838;
-  background-color: #ded3cf;
+  background-color: #d8bbb0;
   color: #2a2838;
   font-size: 1rem;
   font-size: 400;
@@ -105,6 +105,18 @@ header h1 {
   font-size: 3rem;
 }
 
+main .start-panel {
+  background-color: #059072;
+  border: 3px solid #2a2838;
+  border-radius: 10%;
+  font-weight: 700;
+  position: absolute;
+  z-index: 100;
+  line-height: 1.5;
+  width: 45%;
+  padding: 1rem;
+  color: #2a2838;
+}
 main #game-board {
   color: #fdfdfd;
   font-weight: 550;
@@ -114,7 +126,7 @@ main #game-board {
   right: 2rem;
   bottom: 12rem;
   padding: 1rem 2rem;
-  background-color: #ded3cf;
+  background-color: #d8bbb0;
   border-radius: 1rem;
   border: 5px solid #2a2838;
   box-shadow: inset 0 0 2px 1rem #059072;
