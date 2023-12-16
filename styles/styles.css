@@ -1,3 +1,53 @@
+/* Modal styles */
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+.modal-container .modal {
+  background: #04b678;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border: 3px solid #2a2838;
+  z-index: 101;
+}
+.modal-container .modal p {
+  font-size: 20px;
+}
+.modal-container .modal input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 2px solid #2a2838;
+}
+.modal-container .modal button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.modal-container .modal button:hover {
+  background-color: #45a049;
+}
+
+audio {
+  position: absolute;
+  width: 100%;
+  max-width: 300px; /* Adjust as needed */
+  margin: 10px 0;
+}
+
 html {
   box-sizing: border-box;
   background-color: black;
@@ -30,10 +80,9 @@ body {
   position: relative;
   height: 700px;
   width: 1000px;
-  background-image: url(/images/stage-background-1000px.png);
-  background-repeat: no-repeat;
-  background-size: cover;
   padding: 0;
+  background-color: #653585;
+  background: linear-gradient(to bottom, #20145c, #653585, #20145c), linear-gradient(to top, #20145c, #653585, #20145c);
 }
 
 header h1 {
@@ -47,7 +96,7 @@ header h1 {
 
 main #game-board {
   color: #fdfdfd;
-  text-shadow: 1px 2px 2px black;
+  text-shadow: 2px 2px 2px black;
   font-weight: 550;
   font-size: 1.5rem;
   margin: auto;
@@ -55,22 +104,27 @@ main #game-board {
   right: 2rem;
   bottom: 12rem;
   padding: 1rem 2rem;
-  background-color: green;
+  background-color: #04b678;
   border-radius: 1rem;
 }
 main .player-panel {
   color: #fdfdfd;
-  text-shadow: 1px 2px 2px black;
+  text-shadow: 2px 2px 2px black;
   font-weight: 550;
   font-size: 1.5rem;
   margin: auto;
   position: absolute;
   bottom: 2rem;
   left: 2rem;
-  background-color: #ffff00;
+  background-color: #08c029;
+  border: 2px solid #b6fb1f;
   border-radius: 1rem;
+  box-shadow: 0px 0px 10px #b6fb1f;
   width: 200px;
   height: 75px;
+}
+main .player-panel p {
+  margin: auto;
 }
 main #spin-btn,
 main #letter-guess-btn,
@@ -82,15 +136,20 @@ main #player-panel {
 main #letter-guess-btn,
 main #word-guess-btn {
   color: #fdfdfd;
-  text-shadow: 1px 2px 2px black;
+  text-shadow: 2px 2px 2px black;
   font-weight: 550;
   font-size: 1.5rem;
   margin: auto;
-  background-color: #0000ff;
+  background-color: #000070;
   border-radius: 1rem;
   width: 200px;
   height: 50px;
   right: 2rem;
+  border: 2px solid #3ab9f7;
+}
+main #letter-guess-btn:hover,
+main #word-guess-btn:hover {
+  box-shadow: 0px 0px 15px #3ab9f7;
 }
 main #letter-guess-btn {
   position: absolute;
@@ -100,20 +159,88 @@ main #word-guess-btn {
   position: absolute;
   bottom: 2rem;
 }
-main #spin-btn {
-  color: #fdfdfd;
-  text-shadow: 1px 2px 2px black;
-  font-weight: 550;
-  font-size: 1.5rem;
-  margin: auto;
+main .container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+main .container .spinBtn {
   position: absolute;
-  background-color: #ff0000;
-  width: 100px;
-  height: 100px;
-  bottom: 0;
+  top: 200px;
+  width: 60px;
+  height: 60px;
+  background: #fab904;
   border-radius: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: 0.1em;
+  border: 4px solid #fefe90;
+  cursor: pointer;
+  user-select: none;
+}
+main .container .spinBtn:hover {
+  box-shadow: 0px 0px 10px #fefe90;
+}
+main .container .spinBtn::before {
+  content: "";
+  position: absolute;
+  top: -28px;
+  width: 20px;
+  height: 30px;
+  background: #fab904;
+  clip-path: polygon(50% 0%, 1% 100%, 85% 100%);
+}
+main .container .wheel {
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fab904;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 5px #fefe90, 0 0 0 15px #fab904, 0 0 0 18px #fefe90;
+  transition: transform 5s ease-in-out;
+}
+main .container .wheel .number {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background: var(--clr);
+  transform-origin: bottom right;
+  transform: rotate(calc(45deg * var(--i)));
+  clip-path: polygon(0 0, 55% 0, 100% 100%, 0 55%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+}
+main .container .wheel .number span {
+  position: relative;
+  transform: rotate(45deg);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 4px 5px 3px rgba(0, 0, 0, 0.5);
+}
+main #volume-icon {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 30px;
+  color: #96000f;
+}
+main #volume-icon:hover {
+  color: #eda2a9;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,10 @@
+@use 'mixins' as *;
+@use 'variables' as *;
+
+audio {
+    position: absolute;
+    width: 100%;
+    max-width: 300px; /* Adjust as needed */
+    margin: 10px 0;
+  }
+  
