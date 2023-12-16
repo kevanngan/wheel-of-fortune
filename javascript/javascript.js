@@ -2,6 +2,7 @@
 
 class WheelOfFortune {
   constructor() {
+// Game state variables
     this.wordList = ['Apple', 'Orange', 'Pineapple', 'Mango', 'Durian'];
     this.currentWord = '';
     this.playerCash = 0;
@@ -9,16 +10,20 @@ class WheelOfFortune {
     this.maxIncorrectGuesses = 3;
     this.incorrectGuesses = 0;
     this.lives = 3;
+
+// DOM elements
     this.gameBoardElement = document.getElementById('game-board');
     this.cashElement = document.getElementById('cash');
     this.livesElement = document.getElementById('lives');
     this.lastSpinResult = this.spinWheel();
+
+// Sounds
     this.correctSound = new Audio('/audio/correct.mp3'); 
     this.wrongSound = new Audio('/audio/wrong.mp3'); 
     this.winSound = new Audio('/audio/win.mp3'); 
     this.loseSound = new Audio('/audio/lose.mp3'); 
 
-    
+// Event Listeners 
     document.getElementById('spinBtn').addEventListener('click', () => {
       this.spin();
     });
@@ -31,9 +36,29 @@ class WheelOfFortune {
       this.guessWord();
     });
 
+// Initialize game
     this.startNewGame();
   }
 
+  // Sounds
+  playWinSound() {
+    this.winSound.play();
+  }
+
+  playLoseSound() {
+    this.loseSound.play();
+  }
+
+  playCorrectSound() {
+    this.correctSound.play();
+  }
+
+  playWrongSound() {
+    this.wrongSound.play();
+  }
+
+
+// Start game
   startNewGame() {
     this.resetGameState();
     this.displayGameBoard();
@@ -41,18 +66,19 @@ class WheelOfFortune {
     this.disableGuessButtons();
 
     const startButton = document.getElementById('startBtn');
-
+    // Event listener for the start button
     startButton.addEventListener('click', () => {
       this.hideStartPanel();
-      this.enableSpin(); // Optionally, enable the spin button after hiding the start panel
+      this.enableSpin();
     });
   }
-
+  // Hide the start panel
   hideStartPanel() {
     const startPanel = document.querySelector('.start-panel');
     startPanel.style.display = 'none';
   }
 
+// Reset game state
   resetGameState() {
     this.currentWord = this.wordList[Math.floor(Math.random() * this.wordList.length)];
     this.guessedLetters = [];
@@ -61,17 +87,7 @@ class WheelOfFortune {
     this.playerCash = 0;
   }
 
-  displayGameBoard() {
-    this.gameBoardElement.textContent = this.currentWord
-      .split('')
-      .map(letter => (this.guessedLetters.includes(letter.toUpperCase()) ? `${letter} ` : '_ '))
-      .join('');
-  }
-
-  isValidGuess(guessedLetter) {
-    return guessedLetter && guessedLetter.length === 1;
-  }
-
+  // Letter guess function
   guessLetter() {
     const alphabetSet = new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
   
@@ -115,6 +131,7 @@ class WheelOfFortune {
     });
   }
 
+// Word guess function
   guessWord() {
     const alphabetSet = new Set('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
   
@@ -130,7 +147,7 @@ class WheelOfFortune {
   
       if (sanitizedGuessedWord === this.currentWord.toUpperCase()) {
         this.displayGameBoard();
-        this.endGame(true); // Correctly call endGame with true for winning
+        this.endGame(true);
       } else {
         alert('Sorry, incorrect guess. Try again.');
         this.handleGuess('incorrect');
@@ -139,6 +156,7 @@ class WheelOfFortune {
     });
   }
 
+// Handling guess result
   handleGuess(result) {
     if (result === 'correct') {
       this.updatePlayerCash(this.lastSpinResult);
@@ -160,14 +178,24 @@ class WheelOfFortune {
     this.updateUI();
   }
 
-  playCorrectSound() {
-    this.correctSound.play();
+  updateUI() {
+    this.cashElement.innerText = this.playerCash;
+    this.livesElement.innerText = this.lives;
   }
 
-  playWrongSound() {
-    this.wrongSound.play();
+  isValidGuess(guessedLetter) {
+    return guessedLetter && guessedLetter.length === 1;
   }
 
+// Display the game board with guessed letters
+  displayGameBoard() {
+    this.gameBoardElement.textContent = this.currentWord
+      .split('')
+      .map(letter => (this.guessedLetters.includes(letter.toUpperCase()) ? `${letter} ` : '_ '))
+      .join('');
+  }
+
+// Update player cash
   updatePlayerCash(spinResult) {
     const cashAmount = Number(spinResult);
     if (!isNaN(cashAmount)) {
@@ -178,10 +206,7 @@ class WheelOfFortune {
     }
   }
 
-  updateUI() {
-    this.cashElement.innerText = this.playerCash;
-    this.livesElement.innerText = this.lives;
-  }
+// Enable/Disable buttons
 
   disableGuessButtons() {
     document.getElementById('spinBtn').disabled = false;
@@ -199,6 +224,7 @@ class WheelOfFortune {
     document.getElementById('spinBtn').disabled = false;
   }
 
+// Modal input
   showModal(message, callback) {
     // Close any existing modals
     this.closeModal();
@@ -251,7 +277,6 @@ class WheelOfFortune {
     if (modalContainer) {
       document.body.removeChild(modalContainer);
       
-      // Clear input value after closing the modal
       const inputElement = modalContainer.querySelector('input');
       if (inputElement) {
         inputElement.value = '';
@@ -259,6 +284,35 @@ class WheelOfFortune {
     }
   }
 
+// Spin
+  spinWheel() {
+    return 100; // Set the cash amount to $100
+  }
+
+  spin() {
+    const wheel = document.querySelector('.wheel');
+    let value = Math.ceil(Math.random() * 3600);
+  
+    wheel.style.transform = "rotate(" + value + "deg)";
+    value = Math.ceil(Math.random() * 3600);
+  
+    this.disableSpin();
+  
+    setTimeout(() => {
+      this.enableGuessButtons();
+    }, 5000);
+  }
+
+  disableSpin() {
+    document.getElementById('spinBtn').disabled = true;
+  }
+  
+  enableSpin() {
+    document.getElementById('spinBtn').disabled = false;
+  }
+
+
+// End game
   endGame(hasPlayerWon) {
     if (hasPlayerWon) {
       this.playWinSound();
@@ -276,42 +330,6 @@ class WheelOfFortune {
     } else {
       alert('Thank you for playing!');
     }
-  }
-
-  playWinSound() {
-    this.winSound.play();
-  }
-
-  playLoseSound() {
-    this.loseSound.play();
-  }
-
-  spinWheel() {
-    return 100; // Set the cash amount to $100
-  }
-
-  spin() {
-    const wheel = document.querySelector('.wheel');
-    let value = Math.ceil(Math.random() * 3600);
-  
-    wheel.style.transform = "rotate(" + value + "deg)";
-    value = Math.ceil(Math.random() * 3600);
-  
-    // Disable spin button after spinning
-    this.disableSpin();
-  
-    // Enable guess buttons after a delay (adjust the time as needed)
-    setTimeout(() => {
-      this.enableGuessButtons();
-    }, 5000); // Adjust the time as needed
-  }
-
-  disableSpin() {
-    document.getElementById('spinBtn').disabled = true;
-  }
-  
-  enableSpin() {
-    document.getElementById('spinBtn').disabled = false;
   }
 }
 

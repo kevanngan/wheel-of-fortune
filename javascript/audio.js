@@ -5,10 +5,10 @@
   // Background music constructor
 function BackgroundMusic(src) {
     this.audio = new Audio(src);
-    this.correctSound = new Audio('/audio/correct.mp3'); // Change the path accordingly
-    this.wrongSound = new Audio('/audio/wrong.mp3'); // Change the path accordingly
+    this.correctSound = new Audio('/audio/correct.mp3');
+    this.wrongSound = new Audio('/audio/wrong.mp3');
   
-    this.audio.volume = 0.5; // Set default volume
+    this.audio.volume = 0.5; 
     this.play = function () {
       const playPromise = this.audio.play();
   
@@ -16,7 +16,6 @@ function BackgroundMusic(src) {
         playPromise.catch(error => {
           // Autoplay was prevented
           console.log('Autoplay prevented:', error);
-          // You can handle this situation, e.g., by displaying a message to the user
         });
       }
     };
@@ -63,19 +62,17 @@ function BackgroundMusic(src) {
   function handleCorrectGuess() {
     // Play correct sound
     gameMusic.playCorrectSound();
-    // Add any additional logic for correct guess
   }
   
   // Function to handle incorrect guess
   function handleIncorrectGuess() {
     // Play wrong sound
     gameMusic.playWrongSound();
-    // Add any additional logic for incorrect guess
   }
   
   // Function to start the game on any user click
   function startGame() {
-    document.body.removeEventListener('click', startGame); // Remove the event listener
+    document.body.removeEventListener('click', startGame);
     gameMusic.play();
   }
   
