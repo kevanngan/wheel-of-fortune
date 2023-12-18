@@ -3,10 +3,11 @@
 // Audio
 
   // Background music constructor
-function BackgroundMusic(src) {
-    this.audio = new Audio(src);
+function BackgroundMusic() {
+    this.audio = document.getElementById('game-audio');
     this.correctSound = new Audio('/audio/correct.mp3');
     this.wrongSound = new Audio('/audio/wrong.mp3');
+    this.audio = new Audio('audio/background-music.mp3');
   
     this.audio.volume = 0.5; 
     this.play = function () {

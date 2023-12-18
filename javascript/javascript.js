@@ -18,10 +18,10 @@ class WheelOfFortune {
     this.lastSpinResult = this.spinWheel();
 
 // Sounds
-    this.correctSound = new Audio('/audio/correct.mp3'); 
-    this.wrongSound = new Audio('/audio/wrong.mp3'); 
-    this.winSound = new Audio('/audio/win.mp3'); 
-    this.loseSound = new Audio('/audio/lose.mp3'); 
+  this.correctSound = new Audio('audio/correct.mp3'); 
+  this.wrongSound = new Audio('audio/wrong.mp3'); 
+  this.winSound = new Audio('audio/win.mp3'); 
+  this.loseSound = new Audio('audio/lose.mp3');  
 
 // Event Listeners 
     document.getElementById('spinBtn').addEventListener('click', () => {
